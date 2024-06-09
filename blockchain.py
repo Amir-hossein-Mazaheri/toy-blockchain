@@ -53,7 +53,7 @@ def add_block(prev_block, ledger):
     while True:
         hash = sha256(json.dumps(block, sort_keys=True).encode()).hexdigest()
 
-        if hash[:4] == math_problem:
+        if hash[:len(math_problem)] == math_problem:
             block["hash"] = hash
             return block
 
@@ -75,4 +75,5 @@ def fill_blocks():
         blocks.append(block)
 
 
-fill_blocks()
+if __name__ == '__main__':
+    fill_blocks()
