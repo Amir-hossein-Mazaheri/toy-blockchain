@@ -1,0 +1,18 @@
+{
+    "blockNumber": 15,
+     "User1": {
+        "Information": {
+           "Sender": "KF6G34EWDWR39991KPSMU7QGWTRWR3EPOQTJ2OHXGYLARD3X62DNWEAAA2",
+           "Receiver": "2OHXGOQ2LARDRBH23KJETT2CK2PY66NJOYNIITOQKF6GJNA36KX4B5PFJJ",
+           "Amount": 73
+                }
+            },
+     "User2": {
+        "Information": {
+           "Sender": "0000AGLQN8176D628B5F9FDD997804KC8A46E7545547F6DB7E17PF99PF",
+           "Receiver": "GALX2241209XTYQ7WIKIOEJ7LKRCPFY63AN62YDEGUKHX4U7BD4EO7Y545",
+           "Amount": 34
+                }
+            }
+  }
+  
