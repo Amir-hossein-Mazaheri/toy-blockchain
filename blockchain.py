@@ -2,7 +2,6 @@ import json
 import os
 import glob
 import re
-from pprint import pprint
 from hashlib import sha256
 
 genesis_block = None
@@ -40,18 +39,21 @@ def initial_load():
 
 
 def add_block(prev_block, ledger):
-    prev_hash = sha256()
-    prev_hash.update(json.dumps(prev_block, sort_keys=True).encode())
     math_problem = ledger["mathProblem"]
 
     block = {
         k: v for k, v in ledger.items() if k != "mathProblem"
     }
-    block["prev_hash"] = prev_hash.hexdigest()
+    # previous block hash value which is stored on it should not be in the
+    # prev_hash because I just added hash to print it later and in bitcoin
+    # it's not part of the hash
+    block["prev_hash"] = sha256(json.dumps({
+        k: v for k, v in prev_block.items() if k != "hash"
+    }).encode()).hexdigest()
     block["nonce"] = 0
 
     while True:
-        hash = sha256(json.dumps(block, sort_keys=True).encode()).hexdigest()
+        hash = sha256(json.dumps(block).encode()).hexdigest()
 
         if hash[:len(math_problem)] == math_problem:
             block["hash"] = hash
@@ -61,10 +63,10 @@ def add_block(prev_block, ledger):
 
 
 def fill_blocks():
-    initial_load()
+    blocks.append(genesis_block)
 
     for i, ledger in enumerate(ledgers):
-        block = add_block(genesis_block if i == 0 else blocks[i - 1], ledger)
+        block = add_block(blocks[i], ledger)
 
         print(f"Block Number: {block['blockNumber']}")
         print(f"Block Hash: {block['hash']}")
@@ -76,4 +78,6 @@ def fill_blocks():
 
 
 if __name__ == '__main__':
+    initial_load()
+
     fill_blocks()
